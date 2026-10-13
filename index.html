@@ -1,83 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Uma surpresa de aniversário feita com carinho.">
+  <meta name="theme-color" content="#0a0610">
 
-	<link rel="shortcut icon" type="image/png" href="favicon.png" />
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Uma surpresa pra você ✨">
+  <meta property="og:description" content="Abra e descubra o que eu preparei.">
+  <meta property="og:image"       content="preview.jpg">
+  <meta property="og:url"         content="https://seusite.com/">
+  <meta name="twitter:card"       content="summary_large_image">
 
-	<title>Birthday Surprise 🎂</title>
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <title>Surpresa de Aniversário ✨</title>
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-		rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="director.css">
 
-	<link rel="stylesheet" href="style.css">
-
-	<script src="script.js"></script>
-
+  <script src="config.js"></script>
+  <script src="script.js" defer></script>
+  <script src="director.js" defer></script>
 </head>
 
 <body>
-	<!-- BACKGROUND BLOBS -->
-	<div class="blob blob1"></div>
-	<div class="blob blob2"></div>
+  <!-- Luzes de fundo -->
+  <div class="ambient" aria-hidden="true">
+    <span class="glow glow-1"></span>
+    <span class="glow glow-2"></span>
+    <span class="glow glow-3"></span>
+    <span class="grain"></span>
+  </div>
 
-	<!-- INTRO -->
-	<section id="intro" class="intro">
-		<div class="intro-card">
+  <!-- Partículas (poeira dourada) -->
+  <canvas id="dust" aria-hidden="true"></canvas>
 
-			<div class="badge">
-				✨ Birthday Experience ✨
-			</div>
+  <!-- ══════════════════════════════════════════════════════════
+       INTRO — Envelope selado
+       ══════════════════════════════════════════════════════════ -->
+  <section id="intro" class="intro">
+    <div class="intro-stage">
 
-			<h1>
-				Created Especially For<br>
-				<span>
-					<script>document.write(config.birthdayPerson)</script>
-				</span>
-			</h1>
+      <p class="intro-eyebrow">Uma mensagem para</p>
 
-			<p class="subtitle">
-				Crafted with ❤️ by <span>
-					<script>document.write(config.sender)</script>
-				</span>
-			</p>
+      <h1 class="intro-name" data-config="birthdayPerson">Maria</h1>
 
-			<p class="description">
-				Something special awaits inside.
-			</p>
+      <button id="startBtn" class="envelope" type="button" aria-label="Abrir a mensagem">
+        <svg class="envelope-svg" viewBox="0 0 260 170" aria-hidden="true">
+          <path class="env-body"
+                d="M6 6 H254 Q258 6 258 10 V160 Q258 164 254 164 H6 Q2 164 2 160 V10 Q2 6 6 6 Z"/>
+          <path class="env-fold-l" d="M2 10 L130 96 L2 160 Z"/>
+          <path class="env-fold-r" d="M258 10 L130 96 L258 160 Z"/>
+          <rect class="env-letter" x="24" y="18" width="212" height="140" rx="4"/>
+          <path class="env-flap" d="M2 10 L130 96 L258 10 L258 6 Q258 2 254 2 H6 Q2 2 2 6 Z"/>
+        </svg>
+        <span class="envelope-seal" aria-hidden="true">✦</span>
+      </button>
 
-			<button id="startBtn" class="start-btn">
-				Open Your Surprise →
-			</button>
+      <p class="intro-hint">Toque no selo para abrir</p>
 
-		</div>
+    </div>
+  </section>
 
-	</section>
+  <!-- ══════════════════════════════════════════════════════════
+       HISTÓRIA — cenas cinematográficas + botão manual
+       ══════════════════════════════════════════════════════════ -->
+  <section id="story" class="story" aria-live="polite">
+    <div class="story-stage">
 
-	<!-- MAIN STORY -->
-	<section id="story" class="story">
+      <div id="scene" class="scene"></div>
 
-		<div id="scene" class="scene"></div>
+      <button id="nextBtn" class="next-btn" type="button" aria-label="Próxima frase" hidden>
+        <span class="next-btn-label">Continuar</span>
+        <span class="next-btn-icon" aria-hidden="true">
+          <i class="fa-solid fa-arrow-right"></i>
+        </span>
+      </button>
 
-	</section>
+    </div>
+  </section>
 
-	<!-- MUSIC -->
-	<audio id="music" src="happy-birthday.mp3"></audio>
+  <!-- ══════════════════════════════════════════════════════════
+       CARTA FINAL
+       ══════════════════════════════════════════════════════════ -->
+  <section id="finale" class="finale" hidden>
+    <div class="finale-stage">
 
-	<button id="musicBtn" class="music-btn">
-		<i class="fas fa-play"></i>
-	</button>
+      <div class="finale-ornament" aria-hidden="true">
+        <span class="line"></span>
+        <span class="dot">✦</span>
+        <span class="line"></span>
+      </div>
 
-	<!-- EFFECTS -->
-	<div class="cursor-glow"></div>
+      <p class="finale-eyebrow" data-config="finalEyebrow">Com todo meu carinho</p>
 
-	<canvas id="confetti"></canvas>
+      <h2 class="finale-title" data-config="finalTitle">Feliz Aniversário</h2>
 
+      <p class="finale-body" data-config="finalBody">
+        Que este novo ano seja repleto de coisas boas.
+      </p>
+
+      <p class="finale-signature" data-config="finalSignature">Com amor, João</p>
+
+      <div class="finale-actions">
+        <button id="openGalleryBtn" class="btn-primary" type="button" hidden>
+          <i class="fa-solid fa-images" aria-hidden="true"></i>
+          Ver nossa galeria
+        </button>
+        <button id="shareBtn" class="btn-ghost" type="button">
+          <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i>
+          Compartilhar
+        </button>
+        <button id="replayBtn" class="btn-ghost" type="button">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+          Ver de novo
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       GALERIA (opcional, aberta pela carta final)
+       ══════════════════════════════════════════════════════════ -->
+  <section id="gallery" class="gallery" hidden>
+    <div class="gallery-stage">
+
+      <header class="gallery-head">
+        <button id="galleryBack" class="gallery-back" type="button" aria-label="Voltar">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Voltar à carta
+        </button>
+        <p class="gallery-eyebrow" data-config="galleryEyebrow">Memórias</p>
+        <h2 class="gallery-title" data-config="galleryTitle">Nossos momentos</h2>
+      </header>
+
+      <div id="galleryGrid" class="gallery-grid" role="list"></div>
+
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" hidden aria-modal="true" role="dialog">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">✕</button>
+    <figure class="lightbox-figure">
+      <img id="lightboxImg" alt="">
+      <figcaption id="lightboxCap"></figcaption>
+    </figure>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       CONTROLES
+       ══════════════════════════════════════════════════════════ -->
+  <audio id="music" preload="auto"></audio>
+
+  <button id="musicBtn" class="music-btn" type="button" aria-label="Ligar ou desligar música">
+    <i class="fa-solid fa-music" aria-hidden="true"></i>
+  </button>
+
+  <button id="skipBtn" class="skip-btn" type="button" hidden>
+    Pular <i class="fa-solid fa-forward" aria-hidden="true"></i>
+  </button>
+
+  <!-- ══════════════════════════════════════════════════════════
+       MODO DIRETOR (só com ?demo=1)
+       ══════════════════════════════════════════════════════════ -->
+  <aside id="directorPanel" class="director" hidden aria-label="Painel de direção">
+    <header class="director-head">
+      <strong>🎬 Diretor</strong>
+      <span id="dirTime">00:00.0</span>
+      <button type="button" id="dirClose" aria-label="Fechar painel">✕</button>
+    </header>
+    <div class="director-body">
+      <div class="dir-row"><span>Cena</span><b id="dirScene">1 / 19</b></div>
+      <div class="dir-bar"><div id="dirProgress"></div></div>
+      <div class="dir-row"><span>Atual</span><b id="dirText">—</b></div>
+    </div>
+    <div class="director-actions">
+      <button type="button" id="dirPrev">← Anterior</button>
+      <button type="button" id="dirNext">Próxima →</button>
+      <button type="button" id="dirPause">⏸ Pausar</button>
+      <button type="button" id="dirRestart">↺ Recomeçar</button>
+      <button type="button" id="dirHide">👁 Esconder</button>
+      <button type="button" id="dirEnd">⏭ Ir ao fim</button>
+    </div>
+    <footer class="director-foot">
+      <kbd>←</kbd> <kbd>→</kbd> navegar · <kbd>espaço</kbd> pausar · <kbd>R</kbd> reiniciar · <kbd>H</kbd> esconder
+    </footer>
+  </aside>
 
 </body>
 

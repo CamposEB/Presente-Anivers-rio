@@ -1,0 +1,152 @@
+/* ============================================================
+   MODO DIRETOR — visível apenas quando ?demo=1
+   ============================================================ */
+
+.director {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 9999;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: rgba(20, 14, 26, .92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 14px;
+  color: #f5e9f2;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .6);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.director.is-hidden {
+  opacity: .15;
+  transform: translateX(-260px);
+}
+.director.is-hidden:hover {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.director-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.director-head strong {
+  flex: 1;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+.director-head span {
+  font-variant-numeric: tabular-nums;
+  color: #e3b96b;
+  font-weight: 600;
+}
+.director-head button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  opacity: .7;
+}
+.director-head button:hover { background: rgba(255, 255, 255, .08); opacity: 1; }
+
+.director-body {
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+.dir-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+.dir-row span { color: rgba(255, 255, 255, .55); font-size: 11px; }
+.dir-row b    { font-weight: 600; text-align: right; }
+
+.dir-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  overflow: hidden;
+}
+.dir-bar > div {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #e3b96b, #f39ab6);
+  border-radius: inherit;
+  transition: width .3s ease;
+}
+
+#dirText {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  color: #f39ab6;
+  font-size: 11px;
+}
+
+.director-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+.director-actions button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .04);
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.director-actions button:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .2);
+}
+.director-actions button:active { transform: translateY(1px); }
+
+.director-foot {
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .45);
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.6;
+}
+.director-foot kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 10px;
+  color: #f5e9f2;
+  margin: 0 2px;
+}
+
+body.demo-mode .music-btn { opacity: .2; transition: opacity .3s ease; }
+body.demo-mode .music-btn:hover { opacity: 1; }
+
+@media (max-width: 640px) {
+  .director { width: 280px; top: 8px; left: 8px; }
+  .director-actions { grid-template-columns: 1fr; }
+}
